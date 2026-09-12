@@ -2,6 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 
+// CI signing: only enabled when the release keystore is provided via GitHub Actions secrets.
+// The keystore is decoded from the CI_KEYSTORE_BASE64 secret into the module build dir,
+// used exclusively inside GitHub Actions, and never committed or logged.
+def ciSigningEnabled = (System.getenv('CI_KEYSTORE_BASE64') ?: '').length() > 0 &&
+        (System.getenv('CI_KEYSTORE_PASSWORD') ?: '').length() > 0 &&
+        (System.getenv('CI_KEY_ALIAS') ?: '').length() > 0
+
 android {
     compileSdk 35
     buildToolsVersion = '35.0.0'
@@ -44,7 +51,27 @@ android {
         }
     }
 
+    signingConfigs {
+        if (ciSigningEnabled) {
+            ci {
+                def keystore = file("${buildDir}/ci/release-ci.jks")
+                keystore.parentFile.mkdirs()
+                java.nio.file.Files.write(keystore.toPath(), java.util.Base64.getDecoder().decode(System.getenv('CI_KEYSTORE_BASE64')))
+                storeFile keystore
+                storePassword System.getenv('CI_KEYSTORE_PASSWORD')
+                keyAlias System.getenv('CI_KEY_ALIAS')
+                keyPassword System.getenv('CI_KEY_PASSWORD') ?: System.getenv('CI_KEYSTORE_PASSWORD')
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+            if (ciSigningEnabled) {
+                signingConfig signingConfigs.ci
+            }
+        }
+
         release {
             shrinkResources true
             minifyEnabled true

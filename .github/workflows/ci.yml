@@ -10,6 +10,11 @@ jobs:
   build:
     name: Build, test and lint
     runs-on: ubuntu-latest
+    env:
+      CI_KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      CI_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      CI_KEY_ALIAS: ${{ secrets.KEY_ALIAS_GITHUB }}
+      CI_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD_GITHUB }}
 
     steps:
       - name: Setup JDK 17
