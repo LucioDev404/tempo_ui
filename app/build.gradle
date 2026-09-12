@@ -45,6 +45,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix ".ci"
+        }
+
         release {
             shrinkResources true
             minifyEnabled true
