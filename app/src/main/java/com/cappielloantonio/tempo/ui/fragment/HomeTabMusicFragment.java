@@ -679,7 +679,6 @@ public class HomeTabMusicFragment extends Fragment implements ClickCallback {
         if (homeViewModel.checkHomeSectorVisibility(Constants.HOME_SECTOR_PINNED_PLAYLISTS)) return;
 
         bind.pinnedPlaylistsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        bind.pinnedPlaylistsRecyclerView.setHasFixedSize(true);
 
         playlistHorizontalAdapter = new PlaylistHorizontalAdapter(this);
         bind.pinnedPlaylistsRecyclerView.setAdapter(playlistHorizontalAdapter);
