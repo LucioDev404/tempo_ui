@@ -2,12 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/album_catalogue_cover_image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/card_art_rounded"
+        android:clipToOutline="true"
         app:layout_constraintDimensionRatio="W, 1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -15,11 +18,11 @@
 
     <TextView
         android:id="@+id/album_name_label"
-        style="@style/LabelMedium"
+        style="@style/LabelLarge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
-        android:paddingTop="8dp"
+        android:paddingTop="@dimen/spacing_sm"
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,9 +41,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="16dp"
+        android:layout_height="@dimen/spacing_lg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/artist_name_label"/>
-
+        app:layout_constraintTop_toBottomOf="@+id/artist_name_label" />
 </androidx.constraintlayout.widget.ConstraintLayout>
