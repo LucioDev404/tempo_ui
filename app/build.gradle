@@ -45,10 +45,6 @@ android {
     }
 
     buildTypes {
-        debug {
-            applicationIdSuffix ".ci"
-        }
-
         release {
             shrinkResources true
             minifyEnabled true
@@ -77,6 +73,15 @@ android {
     }
 
     namespace 'com.cappielloantonio.tempo'
+
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == 'debug') {
+            variant.outputs.all { output ->
+                output.versionCodeOverride = 27
+                output.versionNameOverride = '3.9.1-ci'
+            }
+        }
+    }
 }
 
 dependencies {

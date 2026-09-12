@@ -46,20 +46,59 @@ jobs:
       - name: Build debug flavors
         run: ./gradlew assembleTempoDebug assembleNotquitemyDebug assemblePlayDebug --stacktrace
 
+      - name: Set build-tools version
+        run: echo "BUILD_TOOLS_VERSION=35.0.0" >> "$GITHUB_ENV"
+
+      - name: Sign Tempo Debug APK
+        id: sign_tempo
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/tempo/debug
+          signingKeyBase64: ${{ secrets.KEYSTORE_BASE64 }}
+          alias: ${{ secrets.KEY_ALIAS_GITHUB }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD_GITHUB }}
+        env:
+          BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOLS_VERSION }}
+
+      - name: Sign Notquitemy Debug APK
+        id: sign_notquitemy
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/notquitemy/debug
+          signingKeyBase64: ${{ secrets.KEYSTORE_BASE64 }}
+          alias: ${{ secrets.KEY_ALIAS_GITHUB }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD_GITHUB }}
+        env:
+          BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOLS_VERSION }}
+
+      - name: Sign Play Debug APK
+        id: sign_play
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/play/debug
+          signingKeyBase64: ${{ secrets.KEYSTORE_BASE64 }}
+          alias: ${{ secrets.KEY_ALIAS_GITHUB }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD_GITHUB }}
+        env:
+          BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOLS_VERSION }}
+
       - name: Upload Tempo Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: tempo-debug-apk
-          path: app/build/outputs/apk/tempo/debug/app-tempo-debug.apk
+          path: ${{ steps.sign_tempo.outputs.signedReleaseFile }}
 
       - name: Upload Notquitemy Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: notquitemy-debug-apk
-          path: app/build/outputs/apk/notquitemy/debug/app-notquitemy-debug.apk
+          path: ${{ steps.sign_notquitemy.outputs.signedReleaseFile }}
 
       - name: Upload Play Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: play-debug-apk
-          path: app/build/outputs/apk/play/debug/app-play-debug.apk
+          path: ${{ steps.sign_play.outputs.signedReleaseFile }}
