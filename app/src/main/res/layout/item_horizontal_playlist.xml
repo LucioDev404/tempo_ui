@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
     android:clipChildren="false"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:stateListAnimator="@animator/card_press_state">
 
     <ImageView
         android:id="@+id/playlist_cover_image_view"

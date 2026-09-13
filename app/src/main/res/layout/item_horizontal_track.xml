@@ -7,7 +7,8 @@
     android:clipChildren="false"
     android:orientation="horizontal"
     android:paddingTop="2dp"
-    android:paddingBottom="2dp">
+    android:paddingBottom="2dp"
+    android:stateListAnimator="@animator/card_press_state">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/different_disk_divider_sector"

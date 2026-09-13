@@ -6,7 +6,8 @@
     android:clipChildren="false"
     android:orientation="horizontal"
     android:paddingTop="2dp"
-    android:paddingBottom="2dp">
+    android:paddingBottom="2dp"
+    android:stateListAnimator="@animator/card_press_state">
 
     <ImageView
         android:id="@+id/album_cover_image_view"

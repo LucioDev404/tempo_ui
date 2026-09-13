@@ -4,7 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
-    android:paddingEnd="@dimen/spacing_sm">
+    android:paddingEnd="@dimen/spacing_sm"
+    android:stateListAnimator="@animator/card_press_state">
 
     <ImageView
         android:id="@+id/artist_cover_image_view"
