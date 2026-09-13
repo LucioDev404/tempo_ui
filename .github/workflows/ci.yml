@@ -49,7 +49,12 @@ jobs:
         run: ./gradlew lintTempoDebug lintNotquitemyDebug lintPlayDebug --stacktrace
 
       - name: Build debug flavors
-        run: ./gradlew assembleTempoDebug assembleNotquitemyDebug assemblePlayDebug --stacktrace
+        run: ./gradlew assembleTempoDebug assembleNotquitemyDebug assemblePlayDebug --stacktrace --no-daemon
+        env:
+          CI_KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          CI_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          CI_KEY_ALIAS: ${{ secrets.KEY_ALIAS_GITHUB }}
+          CI_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD_GITHUB }}
 
       - name: Upload Tempo Debug APK
         uses: actions/upload-artifact@v4
